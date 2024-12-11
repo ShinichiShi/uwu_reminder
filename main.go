@@ -22,6 +22,7 @@ const (
 var recurConfig = make(map[int]string)     
 var messageConfig = make(map[int]string)  
 var idCounter int = 1                     
+
 func main() {
 	helpFlag := flag.Bool("help", false, "Displays usage information")
 	recurFlag := flag.String("recur", "", "Set recurrence pattern (daily, weekly, monthly)")
@@ -53,7 +54,7 @@ func main() {
 
 	// After flag parsing, get the remaining positional arguments
 	args := flag.Args()
-	if len(args) < 2 {
+	if len(args) < 1 {
 		fmt.Println("Error: Insufficient arguments provided.")
 		printUsage()
 		os.Exit(1)
@@ -68,7 +69,13 @@ func main() {
 
 	// Parse the input date/time
 	timeInput := args[0]
-	message := strings.Join(args[1:], " ")
+	
+	// Determine the message based on remaining arguments
+	var message string
+	if len(args) > 1 {
+		message = strings.Join(args[1:], " ")
+	}
+
 	t, err := w.Parse(timeInput, now)
 
 	if err != nil {
@@ -126,10 +133,11 @@ func handleRecurrence(initialTime time.Time, recurrence, message string) {
 	case "monthly":
 		nextTime = initialTime.AddDate(0, 1, 0)
 	default:
+		fmt.Println("Invalid recurrence pattern. Use daily, weekly, or monthly.")
 		return
 	}
 
-	recurConfig[idCounter] = recurrence // Save recurrence info
+	recurConfig[idCounter] = recurrence 
 	messageConfig[idCounter] = message
 	currentID := idCounter
 	idCounter++
