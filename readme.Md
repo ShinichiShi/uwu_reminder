@@ -17,13 +17,8 @@ Terminals are a developer's favorite workspace, so why not use them for reminder
 
 ---
 
-## Contributors
-
-- [**Supreeth C**](https://github.com/ShinichiShi)
-
----
-
-## Tech Stack : Primarily made in Golang. 
+## Tech Stack : 
+ Primarily made in Golang. 
 
 ---
 
