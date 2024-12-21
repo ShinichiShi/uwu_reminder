@@ -84,7 +84,7 @@ func main() {
 	}
 
 	if t == nil {
-		fmt.Println("Please specify a valid date/time.")
+		fmt.Println("UwU~ Please specify a valid date/time.")
 		os.Exit(2)
 	}
 
@@ -93,29 +93,30 @@ func main() {
 		os.Exit(3)
 	}
 
-	diff := time.Until(t.Time)  // Updated to use time.Until
-
+	diff := time.Until(t.Time)  
 	if os.Getenv(markName) == markValue {
 		time.Sleep(diff)
-		err = beeep.Alert("Reminder", message, "assets/information.png")
+		uwuMessage := fmt.Sprintf("UwU~ %s", message)
+		err = beeep.Alert("Reminder", uwuMessage, "assets/information.png")
 		if err != nil {
 			fmt.Println("Error displaying notification:", err)
 			os.Exit(4)
 		}
-
+	
 		handleRecurrence(t.Time, *recurFlag, message)
 	} else {
 		cmd := exec.Command(os.Args[0], os.Args[1:]...)
 		cmd.Env = append(os.Environ(), fmt.Sprintf("%s=%s", markName, markValue))
-
+	
 		if err = cmd.Start(); err != nil {
 			fmt.Println("Error starting new process:", err)
 			os.Exit(5)
 		}
-
-		fmt.Println("Reminder will trigger in:", diff.Round(time.Second))
+	
+		fmt.Println("UwU~ Reminder will trigger in:", diff.Round(time.Second))
 		os.Exit(0)
 	}
+	
 }
 
 func handleRecurrence(initialTime time.Time, recurrence, message string) {
@@ -145,7 +146,7 @@ func handleRecurrence(initialTime time.Time, recurrence, message string) {
 	diff := time.Until(nextTime)
 	fmt.Printf("Recurring reminder set (ID: %d) for: %s\n", currentID, nextTime.Format("2006-01-02 15:04:05"))
 	time.Sleep(diff)
-	err := beeep.Alert("Recurring Reminder", message, "assets/information.png")
+	err := beeep.Alert("Recurring Reminder", fmt.Sprintf("UwU~ %s", message), "assets/information.png")
 	if err != nil {
 		fmt.Println("Error displaying recurring notification:", err)
 		os.Exit(6)
@@ -208,6 +209,6 @@ func printUsage() {
 }
 
 func welcomeMessage() {
-	fmt.Println("Welcome to the CLI Reminder Tool!")
-	fmt.Println("Type 'remind --help' for usage instructions.")
+	fmt.Println("UwU~ Welcome to the CLI Reminder Tool!")
+	fmt.Println("Type 'remind --help' for usage instructions, nya~!")
 }
